@@ -14,10 +14,10 @@ string Detection::getDistance(cv::Rect roi, cv::Mat frame) {
 
 void Detection::runDetection() {
     //initialize classifiers and capture
-    cv::CascadeClassifier bus = cv::CascadeClassifier("../Classifiers/bus.xml");
-    cv::CascadeClassifier car = cv::CascadeClassifier("../Classifiers/car.xml");
-    cv::CascadeClassifier bike = cv::CascadeClassifier("../Classifiers/bike.xml");
-    cv::CascadeClassifier person = cv::CascadeClassifier("../Classifiers/person.xml");
+    cv::CascadeClassifier bus_classifier = cv::CascadeClassifier("../Classifiers/bus.xml");
+    cv::CascadeClassifier car_classifier = cv::CascadeClassifier("../Classifiers/car.xml");
+    cv::CascadeClassifier bike_classifier = cv::CascadeClassifier("../Classifiers/bike.xml");
+    cv::CascadeClassifier person_classifier = cv::CascadeClassifier("../Classifiers/person.xml");
     cv::VideoCapture capture(0);
     if  (!capture.isOpened()){
         cout << "Capture is not initialized" << endl;
@@ -30,11 +30,11 @@ void Detection::runDetection() {
         capture >> frame;
 
         //get bounding boxes
-        std::vector<cv::Rect> bus_boxes, car_boxes, bike_boxes, person_boxes;
-        bus.detectMultiScale(frame,bus_boxes, 1.3, 5);  
-        car.detectMultiScale(frame, car_boxes,1.3,5);
-        bike.detectMultiScale(frame,bike_boxes, 1.3, 5);  
-        person.detectMultiScale(frame, person_boxes,1.3,5);
+        std::vector<cv::Rect>  , car_boxes, bike_boxes, person_boxes;
+        bus_classifier.detectMultiScale(frame,bus_boxes, 1.3, 5);  
+        car_classifier.detectMultiScale(frame, car_boxes,1.3,5);
+        bike_classifier.detectMultiScale(frame,bike_boxes, 1.3, 5);  
+        person_classifier.detectMultiScale(frame, person_boxes,1.3,5);
 
         //unpack values from each bus bounding box and draw bounding box and get distance
         for (cv::Rect bus: bus_boxes) {
