@@ -27,7 +27,7 @@ if __name__ == "__main__":
         1: 'person', 2: 'bicycle', 3: 'car', 4: 'motorcycle', 5: 'airplane', 6: 'bus',
         7: 'train', 8: 'truck', 9: 'boat', 10: 'traffic light', 11: 'fire hydrant',
         13: 'stop sign', 14: 'parking meter'}
-    heights = {1: 65, 3:67}
+    heights = {1: 65, 3:60,2:31, 4:31, 13:36, 10:35, 11:36}
 
     #initialize capture
     capture = cv2.VideoCapture(0)
@@ -63,13 +63,17 @@ if __name__ == "__main__":
                 else:
                     height = yRightTop - yLeftBottom
                     distance = (heights[class_id]*focalLength/(12*(height)))
+                    if class_id == 3:
+                        distance -= 12
                     label = classNames[class_id] + ": " + str(distance) + " ft"
                 labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
 
                 color = (0,255,0)
 
                 #determine if instance of object is too close
-                if ((distance < 5 and distance != 0) or (height >= rows - 50)):
+                if (distance > 150):
+                    continue
+                if ((distance < 10 and distance != 0) or (height >= rows - 50)):
                     print(classNames[class_id] + " is close" )
                     color = (0,0,255)
 
